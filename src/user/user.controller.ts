@@ -9,7 +9,9 @@ import {
   Post,
   Query,
   Session,
+  UseGuards,
 } from '@nestjs/common';
+import { AuthGuard } from 'src/guards/auth.guard';
 import { Serialize } from 'src/interceptors/serialize.interceptor';
 import { AuthService } from './auth.service';
 import { CreateUserDto } from './dtos/create-user.dto';
@@ -47,11 +49,13 @@ export class UserController {
   }
 
   @Get('/users')
+  @UseGuards(AuthGuard)
   fetchUsers(@Query('email') email: string) {
     return this.userService.fetchAll(email);
   }
 
   @Get('/users/:id')
+  @UseGuards(AuthGuard)
   async fetchUser(@Param('id') id: number) {
     const user = await this.userService.fetchOne(id);
 
@@ -63,12 +67,14 @@ export class UserController {
   }
 
   @Patch('/users/:id')
+  @UseGuards(AuthGuard)
   async updateUser(@Param('id') id: number, @Body() body: Partial<User>) {
     const user = await this.fetchUser(id);
     return this.userService.update(user, body);
   }
 
   @Delete('users/:id')
+  @UseGuards(AuthGuard)
   async deleteUser(@Param('id') id: number) {
     const user = await this.fetchUser(id);
     return this.userService.remove(user);
