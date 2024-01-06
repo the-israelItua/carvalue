@@ -6,8 +6,6 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UserModule } from './user/user.module';
 import { ReportModule } from './report/report.module';
-import { User } from './user/user.entity';
-import { Report } from './report/report.entity';
 import { typeOrmConfig } from './config/typeorm.config';
 const cookieSession = require('cookie-session');
 
